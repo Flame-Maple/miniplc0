@@ -448,7 +448,7 @@ public final class Analyser {
         } else if (check(TokenType.LParen)) {
             // 是表达式
             // 调用相应的处理函数
-            next();
+            expect(TokenType.LParen);
             analyseExpression();
             expect(TokenType.RParen);
         } else {
