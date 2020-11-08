@@ -429,21 +429,21 @@ public final class Analyser {
             // 是标识符
 
             // 加载标识符的值
-            String name = next().getValueString();
+            String name = expect(TokenType.Ident).getValueString();
             var symbol = symbolTable.get(name);
             if (symbol == null) {
                 // 没有这个标识符
-                throw new AnalyzeError(ErrorCode.NotDeclared, next().getStartPos());
+                throw new AnalyzeError(ErrorCode.NotDeclared, expect(TokenType.Ident).getStartPos());
             } else if (!symbol.isInitialized) {
                 // 标识符没初始化
-                throw new AnalyzeError(ErrorCode.NotInitialized, next().getStartPos());
+                throw new AnalyzeError(ErrorCode.NotInitialized, expect(TokenType.Ident).getStartPos());
             }
-            var offset = getOffset(name, null);
+            var offset = getOffset(name, expect(TokenType.Ident).getStartPos());
             instructions.add(new Instruction(Operation.LOD, offset));
         } else if (check(TokenType.Uint)) {
             // 是整数
             // 加载整数值
-            int value = 0;
+            int value = (int)expect(TokenType.Uint).getValue();
             instructions.add(new Instruction(Operation.LIT, value));
         } else if (check(TokenType.LParen)) {
             // 是表达式
