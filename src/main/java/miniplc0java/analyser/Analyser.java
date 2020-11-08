@@ -256,8 +256,8 @@ public final class Analyser {
             
             // 分析初始化的表达式
             if (nextIf(TokenType.Equal) != null) {
-                analyseExpression();
                 initialized = true;
+                analyseExpression();
             } 
 
             // 分号
