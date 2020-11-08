@@ -427,18 +427,18 @@ public final class Analyser {
 
         if (check(TokenType.Ident)) {
             // 是标识符
-
+            var nameToken = expect(TokenType.Ident);
             // 加载标识符的值
-            String name = expect(TokenType.Ident).getValueString();
+            String name = nameToken.getValueString();
             var symbol = symbolTable.get(name);
             if (symbol == null) {
                 // 没有这个标识符
-                throw new AnalyzeError(ErrorCode.NotDeclared, expect(TokenType.Ident).getStartPos());
+                throw new AnalyzeError(ErrorCode.NotDeclared, nameToken.getStartPos());
             } else if (!symbol.isInitialized) {
                 // 标识符没初始化
-                throw new AnalyzeError(ErrorCode.NotInitialized, expect(TokenType.Ident).getStartPos());
+                throw new AnalyzeError(ErrorCode.NotInitialized, nameToken.getStartPos());
             }
-            var offset = getOffset(name, expect(TokenType.Ident).getStartPos());
+            var offset = getOffset(name, nameToken.getStartPos());
             instructions.add(new Instruction(Operation.LOD, offset));
         } else if (check(TokenType.Uint)) {
             // 是整数
