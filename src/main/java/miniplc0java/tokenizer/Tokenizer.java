@@ -53,7 +53,7 @@ public class Tokenizer {
         while (Character.isDigit(it.peekChar())) {
             Uint += it.nextChar();
         }
-        if (Uint.matches("^[0-9=*$")) {
+        if (Uint.matches("^[0-9]*$")) {
             return new Token(TokenType.Uint, Integer.parseInt(Uint), str, it.currentPos());
         }
         else {
